@@ -20,7 +20,7 @@ int main(void) {
     for (int i = 0; i < N; i++) {
         int id = omp_get_thread_num();
         double work = 0.0;
-        for (int j = 0; j < (i % 100 + 1) * 100; j++)
+        for (int j = 0; j <= i * 10; j++)
             work += j * 0.000001;
         sums[id] += work;
         counts[id]++;
@@ -28,7 +28,8 @@ int main(void) {
     end = omp_get_wtime();
     printf("Static time: %f seconds\n", end - start);
     for (int t = 0; t < THREADS; t++)
-        printf("  Thread %d handled %d iterations\n", t, counts[t]);
+        printf("  Thread %d handled %d iterations (sum %.3f)\n",
+               t, counts[t], sums[t]);
 
     // Dynamic scheduling
     for (int t = 0; t < THREADS; t++) {
@@ -41,7 +42,7 @@ int main(void) {
     for (int i = 0; i < N; i++) {
         int id = omp_get_thread_num();
         double work = 0.0;
-        for (int j = 0; j < (i % 100 + 1) * 100; j++)
+        for (int j = 0; j <= i * 10; j++)
             work += j * 0.000001;
         sums[id] += work;
         counts[id]++;
@@ -49,7 +50,8 @@ int main(void) {
     end = omp_get_wtime();
     printf("Dynamic time: %f seconds\n", end - start);
     for (int t = 0; t < THREADS; t++)
-        printf("  Thread %d handled %d iterations\n", t, counts[t]);
+        printf("  Thread %d handled %d iterations (sum %.3f)\n",
+               t, counts[t], sums[t]);
 
     // Guided scheduling
     for (int t = 0; t < THREADS; t++) {
@@ -62,7 +64,7 @@ int main(void) {
     for (int i = 0; i < N; i++) {
         int id = omp_get_thread_num();
         double work = 0.0;
-        for (int j = 0; j < (i % 100 + 1) * 100; j++)
+        for (int j = 0; j <= i * 10; j++)
             work += j * 0.000001;
         sums[id] += work;
         counts[id]++;
@@ -70,7 +72,8 @@ int main(void) {
     end = omp_get_wtime();
     printf("Guided time: %f seconds\n", end - start);
     for (int t = 0; t < THREADS; t++)
-        printf("  Thread %d handled %d iterations\n", t, counts[t]);
+        printf("  Thread %d handled %d iterations (sum %.3f)\n",
+               t, counts[t], sums[t]);
 
     return 0;
 }
