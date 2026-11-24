@@ -33,10 +33,14 @@ void merge_sort_parallel(int a[], int temp[], int left, int right) {
 
     if (right - left + 1 >= THRESHOLD) {
         #pragma omp task shared(a, temp) firstprivate(left, mid)
-        merge_sort_parallel(a, temp, left, mid);
+        {
+            merge_sort_parallel(a, temp, left, mid);
+        }
 
         #pragma omp task shared(a, temp) firstprivate(mid, right)
-        merge_sort_parallel(a, temp, mid + 1, right);
+        {
+            merge_sort_parallel(a, temp, mid + 1, right);
+        }
 
         #pragma omp taskwait
     } else {
@@ -63,7 +67,9 @@ int main(void) {
     #pragma omp parallel
     {
         #pragma omp single
-        merge_sort_parallel(par, temp, 0, N - 1);
+        {
+            merge_sort_parallel(par, temp, 0, N - 1);
+        }
     }
     double par_time = omp_get_wtime() - start;
 
