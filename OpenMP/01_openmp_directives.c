@@ -23,13 +23,19 @@ int main(void) {
         #pragma omp sections
         {
             #pragma omp section
-            printf("Section 1: addition = %d\n", 10 + 20);
+            {
+                printf("Section 1: addition = %d\n", 10 + 20);
+            }
 
             #pragma omp section
-            printf("Section 2: subtraction = %d\n", 20 - 10);
+            {
+                printf("Section 2: subtraction = %d\n", 20 - 10);
+            }
 
             #pragma omp section
-            printf("Section 3: multiplication = %d\n", 10 * 20);
+            {
+                printf("Section 3: multiplication = %d\n", 10 * 20);
+            }
         }
     }
 
