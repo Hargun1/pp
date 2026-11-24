@@ -7,7 +7,7 @@
 int main(void) {
     double sums[THREADS];
     int counts[THREADS];
-    double start, end, work;
+    double start, end;
 
     // Static scheduling
     for (int t = 0; t < THREADS; t++) {
@@ -19,7 +19,7 @@ int main(void) {
     #pragma omp parallel for num_threads(THREADS) schedule(static)
     for (int i = 0; i < N; i++) {
         int id = omp_get_thread_num();
-        work = 0.0;
+        double work = 0.0;
         for (int j = 0; j < (i % 100 + 1) * 100; j++)
             work += j * 0.000001;
         sums[id] += work;
@@ -40,7 +40,7 @@ int main(void) {
     #pragma omp parallel for num_threads(THREADS) schedule(dynamic, 10)
     for (int i = 0; i < N; i++) {
         int id = omp_get_thread_num();
-        work = 0.0;
+        double work = 0.0;
         for (int j = 0; j < (i % 100 + 1) * 100; j++)
             work += j * 0.000001;
         sums[id] += work;
@@ -61,7 +61,7 @@ int main(void) {
     #pragma omp parallel for num_threads(THREADS) schedule(guided)
     for (int i = 0; i < N; i++) {
         int id = omp_get_thread_num();
-        work = 0.0;
+        double work = 0.0;
         for (int j = 0; j < (i % 100 + 1) * 100; j++)
             work += j * 0.000001;
         sums[id] += work;
